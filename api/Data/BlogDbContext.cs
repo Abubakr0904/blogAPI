@@ -7,7 +7,7 @@ namespace api.Data
     {
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Media> Medias { get; set; }
-        public virtual DbSet<Post> Post { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
         
         public BlogDbContext(DbContextOptions options)
             :base(options) {  }

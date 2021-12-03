@@ -21,7 +21,19 @@ namespace api.Core.Repositories
         {
             try
             {
-                return await _dbSet.ToListAsync();
+                return await _dbSet.Select(p => new Post()
+                {
+                    Id = p.Id,
+                    HeaderImageId = p.HeaderImageId,
+                    Title = p.Title,
+                    Description = p.Description,
+                    Content = p.Content,
+                    Viewed = p.Viewed,
+                    CreatedAt = p.CreatedAt,
+                    ModifiedAt = p.ModifiedAt,
+                    Comments = p.Comments,
+                    Medias = p.Medias
+                }).ToListAsync();
             }
             catch(Exception ex)
             {
@@ -36,6 +48,7 @@ namespace api.Core.Repositories
             {
                 return await _dbSet.Include(p => p.Medias)
                         .Include(p => p.Comments)
+                        .Include(p => p.Medias)
                         .Where(p => p.Id == id)
                         .FirstOrDefaultAsync();
             }

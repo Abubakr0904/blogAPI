@@ -10,8 +10,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20211130133738_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211201122852_DbContextChanged")]
+    partial class DbContextChanged
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,10 +27,12 @@ namespace api.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Author")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("PostId")
@@ -100,7 +102,7 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Post");
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("api.Entities.Comment", b =>
@@ -116,7 +118,8 @@ namespace api.Migrations
                 {
                     b.HasOne("api.Entities.Post", null)
                         .WithMany("Medias")
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("api.Entities.Post", b =>

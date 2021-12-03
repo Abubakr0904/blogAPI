@@ -23,7 +23,7 @@ namespace api.Core.Repositories
             try
             {
                 return await _dbSet
-                        .Where(p => p.Id == id)
+                        .Where(p => p.PostId == id)
                         .ToListAsync();
             }
             catch(Exception ex)
